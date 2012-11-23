@@ -56,7 +56,9 @@ try:
         value = old_maybe_iso8601(value)
         if getattr(settings, "USE_TZ", False):
             return value
-        return value.replace(tzinfo=None)
+        if isinstance(value, datetime):
+            return value.replace(tzinfo=None)
+        return value
 
     def now():
         return timezone.localtime(timezone.now())

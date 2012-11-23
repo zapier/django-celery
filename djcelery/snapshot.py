@@ -11,10 +11,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from celery import states
 from celery.events.state import Task
 from celery.events.snapshot import Polaroid
-from celery.utils.timeutils import maybe_iso8601
 
 from .models import WorkerState, TaskState
-from .utils import make_aware
+from .utils import make_aware, maybe_iso8601
 
 
 WORKER_UPDATE_FREQ = 60  # limit worker timestamp write freq.

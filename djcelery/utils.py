@@ -35,6 +35,8 @@ DATABASE_ERRORS = ((DatabaseError, ) +
                    _lite_database_errors +
                    _oracle_database_errors)
 
+from celery.utils.timeutils import maybe_iso8601 as old_maybe_iso8601
+
 try:
     from django.utils import timezone
 
@@ -50,9 +52,16 @@ try:
             value = timezone.make_naive(value, default_tz)
         return value
 
+    def maybe_iso8601(value):
+        value = old_maybe_iso8601(value)
+        if getattr(settings, "USE_TZ", False):
+            return value.
+        return value.replace(tzinfo=None)
+
     def now():
         return timezone.localtime(timezone.now())
 
 except ImportError:
     now = datetime.now
     make_aware = make_naive = lambda x: x
+    maybe_iso8601 = old_maybe_iso8601

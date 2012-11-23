@@ -55,7 +55,7 @@ try:
     def maybe_iso8601(value):
         value = old_maybe_iso8601(value)
         if getattr(settings, "USE_TZ", False):
-            return value.
+            return value
         return value.replace(tzinfo=None)
 
     def now():
